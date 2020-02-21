@@ -14,7 +14,7 @@ exports.up = function(knex) {
         .notNullable()
         .references("id")
         .inTable("recipes")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
     .createTable("ingredients", tbl => {
@@ -31,7 +31,7 @@ exports.up = function(knex) {
         .notNullable()
         .references("id")
         .inTable("recipes")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
       tbl
         .integer("ingredient_id")
@@ -39,13 +39,13 @@ exports.up = function(knex) {
         .notNullable()
         .references("id")
         .inTable("ingredients")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     });
 };
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("recipe_ingredients");
-  await knex.schema().dropTableIfExists("ingredients");
+  await knex.schema.dropTableIfExists("ingredients");
   await knex.schema.dropTableIfExists("steps");
   await knex.schema.dropTableIfExists("recipes");
 };
